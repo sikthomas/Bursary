@@ -1,0 +1,444 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'assets/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="{% static 'assets/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        {% include 'superuser/sidenav2.html' %}
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                {% include 'superuser/topnav.html' %}
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                STUDENT PERSONAL DETAILS: Applicant: 
+                                <span style="color: red;">{{ student.userid.first_name|capfirst }} {{ student.userid.last_name|capfirst }}</span>
+                                <div class="card-header py-3">
+                                   
+                                    <a href="{% url 'adminindex2' %}" style="margin-left: 20px;">&larr; Back</a>
+                                </div>
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Applicant Name</th>
+                                            <th>Gender</th>
+                                            <th>Date of Birth</th>
+                                            <th>ID/BC NO</th>
+                                            <th>Contact</th>
+                                            <th>Ward</th>
+                                            <th>Village</th>
+                                            <th>ID </th>
+                                            <th>Application Date </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                            <tr>
+                                                <td>{{ student.userid.first_name|capfirst }} {{ student.userid.last_name|capfirst }}</td>
+                                                <td>{{ student.gender }}</td>
+                                                <td>{{ student.date_of_birth }}</td>
+                                                <td>{{ student.id_number }}</td>
+                                                <td>{{ student.phone_number }}</td>
+                                                <td>{{ student.ward }}</td>
+                                                <td>{{ student.village }}</td>
+                                                <td>
+                                                    {% if student.applicand_id %}
+                                                        <a href="{{ student.applicand_id.url }}" download>{{ student.applicand_id.name }}</a>
+                                                    {% else %}
+                                                        No file
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ student.filled_date }}</td>
+                                            </tr>
+                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">INSTITUTION INFORMATION</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Level</th>
+                                            <th>Institution Name</th>
+                                            <th>ADM No</th>
+                                            <th>Course</th>
+                                            <th>Mode of Study</th>
+                                            <th>Year of Study</th>
+                                            <th>Cours Duration</th>
+                                            <th>Year of Completion</th>
+                                            <th>Adm Letter</th>
+                                            <th>Fee Statement</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for info in institutionInformation %}
+                                            <tr>
+                                            <td>{{ info.institution_category }}</td>
+                                            <td>{{ info.institution_name }}</td>
+                                            <td>{{ info.admission_no }}</td>
+                                            <td>{{ info.course }}</td>
+                                            <td>{{ info.mode_of_study }}</td>
+                                            <td>{{ info.year_of_study }}</td>
+                                            <td>{{ info.course_duration }}</td>
+                                            <td>{{ info.year_of_completion }}</td>
+                                            <td>
+                                                {% if info.admission_letter %}
+                                                    <a href="{{ info.admission_letter.url }}" download>{{ info.admission_letter.name }}</a>
+                                                {% else %}
+                                                    No file
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if info.fee_statement %}
+                                                    <a href="{{ info.fee_statement.url }}" download>{{ info.fee_statement.name }}</a>
+                                                {% else %}
+                                                    No file
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+
+                <div class="container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">PARENT INFORMATION</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        {% if parent_type.bother_parent %}
+                                            <div></div>
+                                            <p>Father Details and Mother Details</p>
+                                            <tr>
+                                                <th>Father Name</th>
+                                                <th>Father ID</th>
+                                                <th>Father Contact</th>
+                                                <th>Father Occupation</th>
+                                                <th>Father Employer</th>
+                                                <th>Father Annual Income</th>
+                                                <th>Father Scanned ID</th>
+                                                <th>Mother Name</th>
+                                                <th>Mother ID</th>
+                                                <th>Mother Contact</th>
+                                                <th>Mother Occupation</th>
+                                                <th>Mother Employer</th>
+                                                <th>Mother Annual Income</th>
+                                                <th>Mother Scanned ID</th>
+                                            </tr>
+                                        {% elif parent_type.father %}
+                                            <div></div>
+                                            <p>Father Details</p>
+                                            <tr>
+                                                <th>Father Name</th>
+                                                <th>Father ID</th>
+                                                <th>Father Contact</th>
+                                                <th>Father Occupation</th>
+                                                <th>Father Employer</th>
+                                                <th>Father Annual Income</th>
+                                                <th>Father Scanned ID</th>
+                                            </tr>
+                                        {% elif parent_type.mother %}
+                                            <div></div>
+                                            <p>Mother Details</p>
+                                            <tr>
+                                                <th>Mother Name</th>
+                                                <th>Mother ID</th>
+                                                <th>Mother Contact</th>
+                                                <th>Mother Occupation</th>
+                                                <th>Mother Employer</th>
+                                                <th>Mother Annual Income</th>
+                                                <th>Mother Scanned ID</th>
+                                            </tr>
+                                        {% elif parent_type.guardian %}
+                                            <div></div>
+                                            <p>Guardian Details</p>
+                                            <tr>
+                                                <th>Guardian Name</th>
+                                                <th>Guardian ID</th>
+                                                <th>Guardian Contact</th>
+                                                <th>Guardian Occupation</th>
+                                                <th>Guardian Employer</th>
+                                                <th>Guardian Income</th>
+                                                <th>Guardian Scanned ID</th>
+                                                <th>Father Death Cert Name</th>
+                                                <th>Mother Death Cert</th>
+                                            </tr>
+                                        {% endif %}
+                                    </thead>
+                                    <tbody>
+                                        {% if parent_type.bother_parent %}
+                                            {% for info in bothparent %}
+                                                <tr>
+                                                    <td>{{ info.father_firstname|capfirst }} {{ info.father_lastname|capfirst }}</td>
+                                                    <td>{{ info.father_id_no }}</td>
+                                                    <td>{{ info.father_phone_number }}</td>
+                                                    <td>{{ info.father_occupation }}</td>
+                                                    <td>{{ info.father_employer }}</td>
+                                                    <td>{{ info.father_annual_income }}</td>
+                                                    <td>
+                                                        {% if info.father_id %}
+                                                            <a href="{{ student.father_id.url }}" download>{{ student.father_id.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ info.mother_firstname|capfirst }} {{ info.mother_lastname|capfirst }}</td>
+                                                    <td>{{ info.mother_id_no }}</td>
+                                                    <td>{{ info.mother_phone_number }}</td>
+                                                    <td>{{ info.mother_occupation }}</td>
+                                                    <td>{{ info.mother_employer }}</td>
+                                                    <td>{{ info.mother_annual_income }}</td>
+
+                                                    <td>
+                                                        {% if info.mother_id %}
+                                                            <a href="{{ info.mother_id.url }}" download>{{ info.mother_id.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% elif parent_type.father %}
+                                            {% for info in father %}
+                                                <tr>
+                                                    <td>{{ info.father_firstname|capfirst }} {{ info.father_lastname|capfirst }}</td>
+                                                    <td>{{ info.father_id_no }}</td>
+                                                    <td>{{ info.father_phone_number }}</td>
+                                                    <td>{{ info.father_occupation }}</td>
+                                                    <td>{{ info.father_employer }}</td>
+                                                    <td>{{ info.father_annual_income }}</td>
+                                                    <td>
+                                                        {% if info.father_id %}
+                                                            <a href="{{ info.father_id.url }}" download>{{ info.father_id.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% elif parent_type.mother %}
+                                            {% for info in mother %}
+                                                <tr>
+                                                    <td>{{ info.mother_firstname|capfirst }} {{ info.mother_lastname|capfirst }}</td>
+                                                    <td>{{ info.mother_id_no }}</td>
+                                                    <td>{{ info.mother_phone_number }}</td>
+                                                    <td>{{ info.mother_occupation }}</td>
+                                                    <td>{{ info.mother_employer }}</td>
+                                                    <td>{{ info.mother_annual_income }}</td>
+                                                    <td>
+                                                        {% if info.mother_id %}
+                                                            <a href="{{ info.mother_id.url }}" download>{{ info.mother_id.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% elif parent_type.guardian %}
+                                            {% for info in guardian %}
+                                                <tr>
+                                                    <td>{{ info.guardian_firstname|capfirst  }} {{ info.guardian_lastname|capfirst  }}</td>
+                                                    <td>{{ info.guardian_id_no }}</td>
+                                                    <td>{{ info.guardian_phone_number }}</td>
+                                                    <td>{{ info.guardian_occupation }}</td>
+                                                    <td>{{ info.guardian_employer }}</td>
+                                                    <td>{{ info.guardian_annual_income }}</td>
+                                                    <td>
+                                                        {% if info.guardian_id %}
+                                                            <a href="{{ info.guardian_id.url }}" download>{{ info.guardian_id.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if info.father_death_certificate %}
+                                                            <a href="{{ info.father_death_certificate.url }}" download>{{ info.father_death_certificate.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if info.mother_death_certificate %}
+                                                            <a href="{{ info.mother_death_certificate.url }}" download>{{ info.mother_death_certificate.name }}</a>
+                                                        {% else %}
+                                                            No file
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">FINAL DETAILS</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>No.Siblins</th>
+                                            <th>Annual fee siblings</th>
+                                            <th>Main source of Fee</th>
+                                            <th>Reason for applying</th>
+                                            <th>Average academic perfomance</th>
+                                            <th>Disabled</th>
+                                            <th>Disability Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for info in additional_information %}
+                                            <tr>
+                                            <td>{{ info.number_of_siblings }}</td>
+                                            <td>{{ info.siblings_fee }}</td>
+                                            <td>{{ info.main_income_source }}</td>
+                                            <td>{{ info.reason_for_applying }}</td>
+                                            <td>{{ info.average_academic_performance }}</td>
+                                            <td>{{ info.disability }}</td>
+                                            <td>{{ info.disability_name }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'assets/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'assets/js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'assets/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'assets/js/demo/datatables-demo.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+.success{
+    list-style: none;
+    background-color: #169b6b;
+    color: #d2f4e8;
+    box-shadow: 12px 12px 12px #e6e6e6;
+    text-align: center;
+  }
+  .danger{
+    list-style: none;
+    background-color: #f70d0d;
+    color: #d2f4e8;
+    box-shadow: 12px 12px 12px #e6e6e6;
+    text-align: center;
+  }
+  .warning{
+    list-style: none;
+    background-color: #cc7708;
+    color: #d2f4e8;
+    box-shadow: 12px 12px 12px #e6e6e6;
+    text-align: center;
+  }

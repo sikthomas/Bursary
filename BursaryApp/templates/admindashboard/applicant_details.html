@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin</title>
+
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="{% static 'assets/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        {% include 'admindashboard/sidenav.html' %}
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                {% include 'admindashboard/topnav.html' %}
+                <div class="container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Applicant Details</h6>
+                        </div>
+                        <div class="card-body">
+                            <!-- Personal Information -->
+<h5>Personal Information</h5>
+<div class="card-header py-3">
+    <a href="{% url 'adminindex' %}" style="margin-left: 20px;">&larr; Back</a>
+</div>
+<table class="table table-bordered" width="100%" cellspacing="0">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>{{ student.userid.first_name }} {{ student.userid.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>{{ student.gender }}</td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{ student.date_of_birth }}</td>
+        </tr>
+        <tr>
+            <th>ID/BC No</th>
+            <td>{{ student.id_number }}</td>
+        </tr>
+        <tr>
+            <th>Contact</th>
+            <td>{{ student.phone_number }}</td>
+        </tr>
+        <tr>
+            <th>Ward</th>
+            <td>{{ student.ward }}</td>
+        </tr>
+        <tr>
+            <th>Village</th>
+            <td>{{ student.village }}</td>
+        </tr>
+        <tr>
+            <th>Application Date</th>
+            <td>{{ student.filled_date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Debug Output -->
+<p>Personal Information: {{ student }}</p>
+<p>Institution Information: {{ institutionInformation }}</p>
+
+<!-- Institution Information -->
+<h5>Institution Information</h5>
+<table class="table table-bordered" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Level</th>
+            <th>Institution Name</th>
+            <th>ADM NO</th>
+            <th>Course</th>
+            <th>Mode of Study</th>
+            <th>Year of Study</th>
+            <th>Course Duration</th>
+            <th>Year of Completion</th>
+            <th>Admission Letter</th>
+            <th>Fee Statement</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for info in institutionInformation %}
+            <tr>
+                <td>{{ info.institution_category }}</td>
+                <td>{{ info.institution_name }}</td>
+                <td>{{ info.admission_no }}</td>
+                <td>{{ info.course }}</td>
+                <td>{{ info.mode_of_study }}</td>
+                <td>{{ info.year_of_study }}</td>
+                <td>{{ info.course_duration }}</td>
+                <td>{{ info.year_of_completion }}</td>
+                <td>
+                    {% if info.admission_letter %}
+                        <a href="{{ info.admission_letter.url }}" download>{{ info.admission_letter.name }}</a>
+                    {% else %}
+                        No file
+                    {% endif %}
+                </td>
+                <td>
+                    {% if info.fee_statement %}
+                        <a href="{{ info.fee_statement.url }}" download>{{ info.fee_statement.name }}</a>
+                    {% else %}
+                        No file
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'assets/js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/js/demo/datatables-demo.js' %}"></script>
+</body>
+
+</html>
